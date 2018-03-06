@@ -6,11 +6,13 @@
 package com.message.bll;
 
 import com.message.be.Message;
+import java.util.List;
 
 /**
  *
  * @author Mape
  */
 public interface IMechaChatLogicFacade {
-    public Message logMessage(String msg);
+    public Message logMessage(String text);
+    List<Message> getMessages();
 }

@@ -18,10 +18,15 @@ public class Message {
         this.id = id;
         this.text = text;
     }
+    
+    public Message(String text) {
+        
+        this.text = text;
+    }
 
     @Override
     public String toString() {
-        return "Message{" + "text=" + text + '}';
+        return text;
     }
     
 

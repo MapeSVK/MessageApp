@@ -7,6 +7,8 @@ package com.message.bll;
 
 import com.message.be.Message;
 import com.message.dal.ConnectionModel;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,15 +18,31 @@ import javafx.collections.ObservableList;
  */
 public class BLLManager implements IMechaChatLogicFacade {
 
-    private ObservableList<Message> allMessages = FXCollections.observableArrayList();
+    private BLLManager() {
+    }
+    
+    private static BLLManager BLLInstance = null;
   
     
     ConnectionModel cm = new ConnectionModel();
     
     @Override
-    public Message logMessage(String msg) {
-        Message message = new Message(-1,msg);
+    public Message logMessage(String text) {
+        Message message = new Message(text);
         return cm.addMessage(message);
+    }
+
+    @Override
+    public List<Message> getMessages() {
+        return cm.getMessages();
+    }
+    
+    public static BLLManager getBLLManagerInstance() {
+        if (BLLInstance == null) {
+            BLLInstance = new BLLManager();
+            
+        }
+        return BLLInstance;
     }
 
     

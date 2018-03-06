@@ -6,6 +6,7 @@
 package com.message.dal;
 
 import com.message.be.Message;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,6 +47,26 @@ public class ConnectionModel {
         
        return message;
     }
+    
+    public List<Message> getMessages() {
+        List<Message> allMessages = new ArrayList();
+        try (Connection connection = cm.getConnection())
+        {
+            PreparedStatement pstmt = connection.prepareCall("SELECT * FROM Message");
+            ResultSet rs = pstmt.executeQuery();
+                while(rs.next())
+                {
+                    Message message = new Message(rs.getString("text"));
+                    allMessages.add(message);
+                }
+        
+        
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return allMessages;
+    }
    
     
 //    public List<Movie> getAllMovies()
@@ -73,4 +94,6 @@ public class ConnectionModel {
 //        return allMovies;
 //}
 //   
+
+    
 }
